@@ -1,0 +1,135 @@
+{% extends 'ecom/customer_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<!-- Add Bootstrap CSS -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<style type="text/css">
+  /* Centering content and adding some spacing */
+  .form-container {
+    margin-top: 50px;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .form-style-1 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .form-style-1 li {
+    margin-bottom: 20px;
+  }
+
+  .form-style-1 label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  /* Inputs and Textareas */
+  .form-style-1 input[type=text],
+  .form-style-1 input[type=email],
+  .form-style-1 input[type=number],
+  .form-style-1 select,
+  .form-style-1 textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+  }
+
+  .form-style-1 input[type=text]:focus,
+  .form-style-1 input[type=email]:focus,
+  .form-style-1 input[type=number]:focus,
+  .form-style-1 select:focus,
+  .form-style-1 textarea:focus {
+    border-color: #4B99AD;
+    box-shadow: 0 0 8px rgba(75, 153, 173, 0.3);
+  }
+
+  /* Submit Button */
+  .form-style-1 input[type=submit] {
+    background-color: #4B99AD;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .form-style-1 input[type=submit]:hover {
+    background-color: #4691A4;
+  }
+
+  /* Required Field Styling */
+  .form-style-1 .required {
+    color: red;
+  }
+
+  /* Alert Styling */
+  .alert {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border-color: #ffeeba;
+  }
+</style>
+
+<!-- Main content -->
+<div class="container">
+  {% if product_in_cart %}
+    <div class="form-container">
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-style-1">
+          <ul class="list-unstyled">
+            <li>
+              <label for="id_Email">Email <span class="required">*</span></label>
+              {% render_field addressForm.Email class="form-control" placeholder="Email" %}
+            </li>
+            <li>
+              <label for="id_Mobile">Mobile <span class="required">*</span></label>
+              {% render_field addressForm.Mobile class="form-control" placeholder="Mobile" %}
+            </li>
+            <li>
+              <label for="id_Address">Shipment Address <span class="required">*</span></label>
+              {% render_field addressForm.Address id="field5" class="form-control" placeholder="Building Number, City, Pin" %}
+            </li>
+            <li>
+              <input type="submit" value="Proceed To Pay" class="btn btn-primary btn-lg" />
+            </li>
+          </ul>
+        </div>
+      </form>
+    </div>
+  {% else %}
+    <div class="alert alert-warning text-center">
+      First, add products to your cart!
+    </div>
+  {% endif %}
+</div>
+
+<!-- Add Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{% endblock content %}

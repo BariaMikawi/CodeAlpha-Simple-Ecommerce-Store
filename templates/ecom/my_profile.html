@@ -1,0 +1,200 @@
+{% extends 'ecom/customer_base.html' %}
+{% load static %}
+{% block content %}
+
+<style media="screen">
+  body {
+    background-color: #f7f7f7;
+  }
+
+  .profile-container {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  .profile-img {
+    border-radius: 50%;
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  .profile-info {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .profile-info blockquote {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .profile-info p {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+
+  .btn-custom {
+    background-color: #f4511e;
+    border-color: #f4511e;
+    color: #fff;
+    font-size: 20px;
+    padding: 12px 20px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-custom:hover {
+    background-color: #e04000;
+    border-color: #e04000;
+    color: #fff;
+  }
+</style>
+
+<div class="container profile-container">
+  <div class="row">
+    <div class="col-sm-12 col-md-4 text-center">
+      <img src="{% static customer.profile_pic.url %}" alt="Profile Picture" class="profile-img img-fluid" />
+    </div>
+    <div class="col-sm-12 col-md-8">
+      <div class="profile-info">
+        <blockquote>
+          <p>Username: {{ request.user }}</p>
+          <small><cite title="Address">Address: {{ customer.address }} <i class="glyphicon glyphicon-map-marker"></i></cite></small>
+        </blockquote>
+        <p><i class="glyphicon glyphicon-phone"></i> Contact: {{ customer.mobile }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <a href="/edit-profile">
+      <button class="btn btn-custom btn-lg"><span>Edit Profile</span></button>
+    </a>
+  </div>
+</div>
+<!-- Footer -->
+<footer class="bg3 p-t-75 p-b-32">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-lg-3 p-b-50">
+        <h4 class="stext-301 cl0 p-b-30">
+          Categories
+        </h4>
+
+        <ul>
+          <li class="p-b-10">
+            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+              Women
+            </a>
+          </li>
+
+          <li class="p-b-10">
+            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+              Men
+            </a>
+          </li>
+
+          <li class="p-b-10">
+            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+              Shoes
+            </a>
+          </li>
+
+          <li class="p-b-10">
+            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+              Watches
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-sm-6 col-lg-3 p-b-50">
+        <h4 class="stext-301 cl0 p-b-30">
+          Help
+        </h4>
+
+        <ul>
+          <li class="p-b-10">
+            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+              Track Order
+            </a>
+          </li>
+
+          <li class="p-b-10">
+            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+              Returns 
+            </a>
+          </li>
+
+          <li class="p-b-10">
+            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+              Shipping
+            </a>
+          </li>
+
+          <li class="p-b-10">
+            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+              FAQs
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-6 col-lg-3 p-b-50">
+        <h4 class="stext-301 cl0 p-b-30">GET IN TOUCH</h4>
+        <p class="stext-107 cl7 size-201">
+          Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+        </p>
+        <div class="p-t-27">
+          <a href="https://www.facebook.com" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://www.instagram.com" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.pinterest.com" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+            <i class="fab fa-pinterest-p"></i>
+          </a>
+          <a href="https://www.twitter.com" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="https://www.youtube.com" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-lg-3 p-b-50">
+        <h4 class="stext-301 cl0 p-b-30">
+          Newsletter
+        </h4>
+
+        <form>
+          <div class="wrap-input1 w-full p-b-4">
+            <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
+            <div class="focus-input1 trans-04"></div>
+          </div>
+
+          <div class="p-t-18">
+            <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+              Subscribe
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+   
+      <p class="stext-107 cl6 txt-center">
+    
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved 
+
+
+      </p>
+    </div>
+  </div>
+</footer>
+{% endblock content %}

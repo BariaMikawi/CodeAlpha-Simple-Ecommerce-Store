@@ -1,0 +1,1360 @@
+{% extends 'ecom/homebase.html' %}
+{% load static %}
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Isotope -->
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style media="screen">
+
+
+/* Search Results Section */
+.search-results {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: #f8f8f8;
+}
+
+.search-results .heading {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.product-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    transition: transform 0.3s ease;
+    text-align: center;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-image img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.product-info {
+    padding: 10px 0;
+}
+
+.product-name {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.product-price {
+    font-size: 1rem;
+    color: #999;
+    margin-bottom: 15px;
+}
+
+    .section-slide, .slick1, .item-slick1 {
+    max-width: 100%;
+
+  }
+  
+  .item-slick1 {
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Text overlay and positioning */
+  .flex-col-l-m {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+  }
+
+  /* Layer text styling */
+  .layer-slick1 {
+    color: #fff;
+    z-index: 1;
+    position: relative;
+    opacity: 0; /* Start hidden, will be animated in */
+  }
+
+  /* Animation keyframes */
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes slideInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive font and animation */
+  .ltext-101, .ltext-201 {
+    font-size: 2rem;
+    animation: fadeIn 1s forwards; /* Fade in text */
+  }
+  
+  .layer-slick1[data-appear="fadeInDown"] {
+    animation: fadeIn 1s ease forwards;
+  }
+
+  .layer-slick1[data-appear="fadeInUp"] {
+    animation: fadeIn 1s ease 0.8s forwards;
+  }
+
+  .layer-slick1[data-appear="slideInUp"] {
+    animation: slideInUp 1s ease 1.6s forwards;
+  }
+
+  /* Add your custom styles here */
+  .section-slide {
+      width: 100%;
+      overflow: hidden; /* Prevent overflow */
+  }
+
+  .wrap-slick1 {
+      max-width: 100%; /* Ensure the wrap is not wider than the screen */
+  }
+
+  .slick1 .item-slick1 {
+      background-size: cover; /* Make the background image cover the entire slide */
+      background-position: center; /* Center the background image */
+      height: 100vh; /* Set height to full viewport height */
+  }
+
+  /* Additional styles for responsiveness */
+  @media (max-width: 768px) {
+      .slick1 .item-slick1 {
+          height: 70vh; /* Adjust height for smaller screens */
+      }
+  }
+
+  @media (max-width: 480px) {
+      .slick1 .item-slick1 {
+          height: 60vh; /* Adjust height for mobile screens */
+      }
+  }
+  .logo-slider-container {
+    overflow: hidden;
+    padding: 20px 0;
+    background-color: #f8f8f8;
+    position: relative;
+}
+
+.logo-slider {
+    display: flex;
+    gap: 40px;
+    animation: scroll 20s linear infinite;
+}
+
+.logo-slide img {
+    max-height: 80px;
+    max-width: 150px;
+    transition: transform 0.3s ease;
+}
+
+.logo-slide img:hover {
+    transform: scale(1.1);
+}
+
+@keyframes scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+.heading {
+    text-align: center;
+    color: #454343;
+    font-size: 30px;
+    font-weight: 700;
+    position: relative;
+    margin-bottom: 70px;
+    text-transform: uppercase;
+    z-index: 999;
+}
+.white-heading{
+    color: #ffffff;
+}
+.heading:after {
+    content: ' ';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    height: 40px;
+    width: 180px;
+    border-radius: 4px;
+    transform: translateX(-50%);
+    background: url(img/heading-line.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.white-heading:after {
+    background: url(https://i.ibb.co/d7tSD1R/heading-line-white.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.heading span {
+    font-size: 18px;
+    display: block;
+    font-weight: 500;
+}
+.white-heading span {
+    color: #ffffff;
+}
+/*-----Testimonial-------*/
+
+.testimonial:after {
+    position: absolute;
+    top: -0 !important;
+    left: 0;
+    content: " ";
+    background: url(img/testimonial.bg-top.png);
+    background-size: 100% 100px;
+    width: 100%;
+    height: 100px;
+    float: left;
+    z-index: 99;
+}
+
+.testimonial {
+    min-height: 375px;
+    position: relative;
+    background: url({% static 'images/testi.jpg' %});
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+        
+}
+#testimonial4 .carousel-inner:hover{
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+#testimonial4 .carousel-inner:active{
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}
+#testimonial4 .carousel-inner .item{
+  overflow: hidden;
+}
+
+.testimonial4_indicators .carousel-indicators{
+  left: 0;
+  margin: 0;
+  width: 100%;
+  font-size: 0;
+  height: 20px;
+  bottom: 15px;
+  padding: 0 5px;
+  cursor: e-resize;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: absolute;
+  text-align: center;
+  white-space: nowrap;
+}
+.testimonial4_indicators .carousel-indicators li{
+  padding: 0;
+  width: 14px;
+  height: 14px;
+  border: none;
+  text-indent: 0;
+  margin: 2px 3px;
+  cursor: pointer;
+  display: inline-block;
+  background: #ffffff;
+  -webkit-border-radius: 100%;
+  border-radius: 100%;
+}
+.testimonial4_indicators .carousel-indicators .active{
+  padding: 0;
+  width: 14px;
+  height: 14px;
+  border: none;
+  margin: 2px 3px;
+  background-color: #9dd3af;
+  -webkit-border-radius: 100%;
+  border-radius: 100%;
+}
+.testimonial4_indicators .carousel-indicators::-webkit-scrollbar{
+  height: 3px;
+}
+.testimonial4_indicators .carousel-indicators::-webkit-scrollbar-thumb{
+  background: #eeeeee;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+
+.testimonial4_control_button .carousel-control{
+  top: 175px;
+  opacity: 1;
+  width: 40px;
+  bottom: auto;
+  height: 40px;
+  font-size: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  overflow: hidden;
+  line-height: 38px;
+  text-shadow: none;
+  text-align: center;
+  position: absolute;
+  background: transparent;
+  border: 2px solid #ffffff;
+  text-transform: uppercase;
+  -webkit-border-radius: 100%;
+  border-radius: 100%;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition: all 0.6s cubic-bezier(0.3,1,0,1);
+  transition: all 0.6s cubic-bezier(0.3,1,0,1);
+}
+.testimonial4_control_button .carousel-control.left{
+  left: 7%;
+  top: 50%;
+  right: auto;
+}
+.testimonial4_control_button .carousel-control.right{
+  right: 7%;
+  top: 50%;
+  left: auto;
+}
+.testimonial4_control_button .carousel-control.left:hover,
+.testimonial4_control_button .carousel-control.right:hover{
+  color: #000;
+  background: #fff;
+  border: 2px solid #fff;
+}
+
+.testimonial4_header{
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 550px;
+  display: block;
+  margin: 30px auto;
+  text-align: center;
+  position: relative;
+}
+.testimonial4_header h4{
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 600;
+  position: relative;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.testimonial4_slide{
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 70%;
+  margin: auto;
+  padding: 20px;
+  position: relative;
+  text-align: center;
+}
+.testimonial4_slide img {
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 136px;
+    height: 136px;
+    margin: auto;
+    display: block;
+    color: #f2f2f2;
+    font-size: 18px;
+    line-height: 46px;
+    text-align: center;
+    position: relative;
+    border-radius: 50%;
+    box-shadow: -6px 6px 6px rgba(0, 0, 0, 0.23);
+    -moz-box-shadow: -6px 6px 6px rgba(0, 0, 0, 0.23);
+    -o-box-shadow: -6px 6px 6px rgba(0, 0, 0, 0.23);
+    -webkit-box-shadow: -6px 6px 6px rgba(0, 0, 0, 0.23);
+}
+.testimonial4_slide p {
+    color: #ffffff;
+    font-size: 20px;
+    line-height: 1.4;
+    margin: 40px 0 20px 0;
+}
+.testimonial4_slide h4 {
+  color: #ffffff;
+  font-size: 22px;
+}
+
+.testimonial .carousel {
+	padding-bottom:50px;
+}
+.testimonial .carousel-control-next-icon, .testimonial .carousel-control-prev-icon {
+    width: 35px;
+    height: 35px;
+}
+/* ------testimonial  close-------*/
+/* Video Section Styles */
+.video-section {
+  position: relative;
+  height: 70vh; /* Adjust height as desired */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for contrast */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-content {
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+
+.video-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.video-content p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.btn-play-video {
+  font-size: 1rem;
+  padding: 12px 24px;
+  color: #fff;
+  border: 2px solid #fff;
+  transition: all 0.3s ease;
+}
+
+.btn-play-video:hover {
+  background-color: #fff;
+  color: #333;
+}
+/* Black Friday Section Styles */
+.black-friday-offers {
+    background-color: #000; /* Black background for Black Friday */
+    padding: 50px 0;
+}
+
+.black-friday-offers h2 {
+    color: #fff; /* White text for headings */
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.black-friday-offers p {
+    color: #f00; /* Red text for urgency */
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.black-friday-card {
+    background-color: #fff; /* White card background */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.black-friday-card:hover {
+    transform: translateY(-10px); /* Hover effect */
+}
+
+.black-friday-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.black-friday-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.black-friday-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #f00; /* Red badge */
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+.black-friday-content {
+    padding: 15px;
+    text-align: center;
+}
+
+.black-friday-content .product-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.black-friday-content .product-price {
+    font-size: 1rem;
+    color: #f00; /* Highlight sale price in red */
+    margin: 10px 0;
+}
+
+.black-friday-content .product-price del {
+    color: #999; /* Original price in gray */
+    font-size: 0.9rem;
+}
+
+.btn-black-friday {
+    background-color: #f00; /* Red button */
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-black-friday:hover {
+    background-color: #d00; /* Darker red on hover */
+}
+
+</style>
+
+<!-- Link CSS files -->
+<link rel="icon" type="image/png" href="{% static 'images/icons/favicon.png' %}"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+<link rel="stylesheet" href="{% static 'css/util.css' %}">
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+<section class="section-slide">
+  <div class="wrap-slick1">
+    <div class="slick1">
+      <div class="item-slick1" style="background-image: url({% static 'images/slide-01.jpg' %});">
+        <div class="container h-full">
+          <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
+            <div class="layer-slick1" data-appear="fadeInDown">
+              <span class="ltext-101 cl2 respon2">Women Collection 2024</span>
+            </div>
+            <div class="layer-slick1" data-appear="fadeInUp" style="animation-delay: 0.8s;">
+              <h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">NEW SEASON</h2>
+            </div>
+            <div class="layer-slick1" data-appear="slideInUp" style="animation-delay: 1.6s;">
+              <a href="product.html" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">Shop Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="item-slick1" style="background-image: url({% static 'images/slide-02.jpg' %});">
+        <div class="container h-full">
+          <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
+            <div class="layer-slick1" data-appear="fadeInDown">
+              <span class="ltext-101 cl2 respon2">Men New-Season</span>
+            </div>
+            <div class="layer-slick1" data-appear="fadeInUp" style="animation-delay: 0.8s;">
+              <h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">Jackets & Coats</h2>
+            </div>
+            <div class="layer-slick1 animated visible-false" data-appear="slideInUp" data-delay="1600">
+              <a href="product.html" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">Shop Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Include JavaScript libraries -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+	<!-- Banner -->
+	<div class="sec-banner bg0 p-t-80 p-b-50">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
+					<!-- Block1 -->
+					<div class="block1 wrap-pic-w">
+						<img src="{% static 'images/banner-01.jpg' %}" alt="IMG-BANNER">
+
+						<a href="{% url 'category' 'Women' %}" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+							<div class="block1-txt-child1 flex-col-l">
+								<span class="block1-name ltext-102 trans-04 p-b-8">
+									Women
+								</span>
+
+								<span class="block1-info stext-102 trans-04">
+									Winter 2024
+								</span>
+							</div>
+
+							<div class="block1-txt-child2 p-b-4 trans-05">
+								<div class="block1-link stext-101 cl0 trans-09">
+									Shop Now
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+
+				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
+					<!-- Block1 -->
+					<div class="block1 wrap-pic-w">
+						<img src="{% static 'images/banner-02.jpg' %}" alt="IMG-BANNER">
+
+            <a href="{% url 'category' 'Men' %}" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+              	<div class="block1-txt-child1 flex-col-l">
+								<span class="block1-name ltext-102 trans-04 p-b-8">
+									Men
+								</span>
+
+								<span class="block1-info stext-102 trans-04">
+									Spring 2024
+								</span>
+							</div>
+
+							<div class="block1-txt-child2 p-b-4 trans-05">
+								<div class="block1-link stext-101 cl0 trans-09">
+									Shop Now
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+
+				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
+					<!-- Block1 -->
+					<div class="block1 wrap-pic-w">
+						<img src="{% static 'images/banner-03.jpg' %}" alt="IMG-BANNER">
+
+						<a href="{% url 'category' 'Accessories' %}" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+							<div class="block1-txt-child1 flex-col-l">
+								<span class="block1-name ltext-102 trans-04 p-b-8">
+									Accessories
+								</span>
+
+								<span class="block1-info stext-102 trans-04">
+									New Trend
+								</span>
+							</div>
+
+							<div class="block1-txt-child2 p-b-4 trans-05">
+								<div class="block1-link stext-101 cl0 trans-09">
+									Shop Now
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  <section class="black-friday-offers bg-black p-t-50 p-b-50">
+    <div class="container">
+      <div class="p-b-30 text-center">
+        <h2 class="ltext-103 cl0">🔥 Black Friday Mega Deals 🔥</h2>
+        <p class="stext-105 cl0">Grab the hottest deals before they're gone! <span id="countdown"></span></p>
+      </div>
+      <div id="countdown" class="countdown-timer cl0"></div>
+  
+      <div id="blackFridayCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          {% for p in offers_products %}
+          {% if forloop.first or forloop.counter0|divisibleby:4 %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <div class="row justify-content-center">
+          {% endif %}
+              <div class="col-sm-6 col-md-4 col-lg-3 p-b-35">
+                <div class="black-friday-card">
+                  <div class="black-friday-image">
+                    <img src="{% static p.product_image.url %}" alt="{{ p.name }}" class="img-fluid">
+                    <div class="black-friday-badge">Black Friday</div>
+                    <div class="black-friday-discount">Save 50%</div>
+                  </div>
+                  <div class="black-friday-content">
+                    <h4 class="product-title">{{ p.name }}</h4>
+                    <p class="product-price">
+                      <del>${{ p.original_price }}</del> ${{ p.price }}
+                    </p>
+                    <a href="{% url 'add-to-cart' p.id %}" class="btn-black-friday">Add to Cart</a>
+                    <!-- Quick View Button -->
+                    <button type="button" class="btn-quick-view" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#quickViewModal" 
+                    data-id="{{ p.id }}" 
+                    data-name="{{ p.name }}" 
+                    data-price="{{ p.price }}" 
+                    data-image="{% static p.product_image.url %}" 
+                    data-description="{{ p.description }}">
+              Quick View
+            </button>
+                  </div>
+                </div>
+              </div>
+          {% if forloop.counter|divisibleby:4 or forloop.last %}
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#blackFridayCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#blackFridayCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+    <div class="modal fade" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-black text-white">
+            <h5 class="modal-title" id="quickViewModalLabel">Product Details</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <!-- Product Image -->
+              <div class="col-md-6">
+                <img id="modalProductImage" src="" alt="Product Image" class="img-fluid rounded">
+              </div>
+              <!-- Product Info -->
+              <div class="col-md-6">
+                <h4 id="modalProductName" class="product-title"></h4>
+                <p id="modalProductPrice" class="product-price"></p>
+                <p id="modalProductDescription" class="product-description"></p>
+                <div class="modal-actions mt-4">
+                  <a href="#" id="modalAddToCart" class="btn btn-black-friday">Add to Cart</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<style>
+  /* Modal Header */
+  .modal-header {
+    border-bottom: none;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+  }
+  
+  .modal-title {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+  }
+  
+  /* Product Info */
+  .product-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .product-price {
+    font-size: 1.3rem;
+    color: #f00;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .product-description {
+    font-size: 1rem;
+    color:black;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  /* Modal Actions */
+  .modal-actions .btn-black-friday {
+    background: linear-gradient(to right, #f00, #d00);
+    color: black;
+    font-size: 1rem;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+  }
+  
+  .modal-actions .btn-black-friday:hover {
+    background: linear-gradient(to right, #d00, #f00);
+  }
+  </style>
+  
+  </section>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const quickViewModal = document.getElementById("quickViewModal");
+      quickViewModal.addEventListener("show.bs.modal", function (event) {
+        const button = event.relatedTarget; // Button that triggered the modal
+        const id = button.getAttribute("data-id");
+        const name = button.getAttribute("data-name");
+        const price = button.getAttribute("data-price");
+        const image = button.getAttribute("data-image");
+        const description = button.getAttribute("data-description");
+  
+        // Populate the modal
+        document.getElementById("modalProductImage").src = image;
+        document.getElementById("modalProductName").textContent = name;
+        document.getElementById("modalProductPrice").textContent = `$${price}`;
+        document.getElementById("modalProductDescription").textContent = description;
+  
+        // Update Add to Cart link
+        const addToCartLink = document.getElementById("modalAddToCart");
+        addToCartLink.href = `/add-to-cart/${id}`;
+      });
+    });
+  </script>
+  
+    
+    
+<style>
+.black-friday-offers {
+  background: linear-gradient(to bottom, #000, #111);
+  padding: 50px 0;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+}
+
+.black-friday-offers h2 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #f00;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 5px rgba(255, 0, 0, 0.8);
+}
+
+.black-friday-offers p {
+  font-size: 1.2rem;
+  color:black;
+  margin-bottom: 20px;
+}
+
+#countdown {
+  color: #fdd835;
+  font-weight: bold;
+}
+
+/* Card Styles */
+.black-friday-card {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.black-friday-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Image and Badge */
+.black-friday-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.black-friday-image img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.black-friday-card:hover .black-friday-image img {
+  transform: scale(1.1);
+}
+
+.black-friday-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #f00;
+  color: #fff;
+  padding: 5px 15px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 5px;
+}
+
+.black-friday-discount {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: #ff9800;
+  color: #fff;
+  padding: 5px 15px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 20px;
+}
+
+/* Product Info */
+.black-friday-content {
+  padding: 15px;
+  text-align: center;
+}
+
+.black-friday-content .product-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.black-friday-content .product-price {
+  font-size: 1rem;
+  color: #f00;
+}
+
+.black-friday-content .product-price del {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+/* Call-to-Action Buttons */
+.btn-black-friday {
+  background: linear-gradient(to right, #f00, #d00);
+  color: #fff;
+  font-size: 1rem;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.btn-black-friday:hover {
+  background: linear-gradient(to right, #d00, #f00);
+}
+
+.btn-see-more {
+  background-color: #fdd835;
+  color: #000;
+  font-size: 1.2rem;
+  padding: 10px 30px;
+  text-transform: uppercase;
+  border-radius: 5px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.btn-see-more:hover {
+  background-color: #000;
+  color: #fdd835;
+}
+</style>
+
+  <div class="logo-slider-container">
+    <div class="logo-slider">
+        <!-- Original Logos -->
+        <div class="logo-slide"><img src="{% static 'images/logo1.png' %}" alt="Brand Logo 1"></div>
+        <div class="logo-slide"><img src="{% static 'images/logo2.png' %}" alt="Brand Logo 2"></div>
+        <div class="logo-slide"><img src="{% static 'images/logo3.png' %}" alt="Brand Logo 3"></div>
+        <div class="logo-slide"><img src="{% static 'images/logo4.jpg' %}" alt="Brand Logo 4"></div>
+        <div class="logo-slide"><img src="{% static 'images/logo5.png' %}" alt="Brand Logo 5"></div>
+        
+        <!-- Duplicate Logos -->
+        <div class="logo-slide"><img src="{% static 'images/logo1.png' %}" alt="Brand Logo 1"></div>
+        <div class="logo-slide"><img src="{% static 'images/logo2.png' %}" alt="Brand Logo 2"></div>
+        <div class="logo-slide"><img src="{% static 'images/logo3.png' %}" alt="Brand Logo 3"></div>
+        <div class="logo-slide"><img src="{% static 'images/logo4.jpg' %}" alt="Brand Logo 4"></div>
+        <div class="logo-slide"><img src="{% static 'images/logo5.png' %}" alt="Brand Logo 5"></div>
+    </div>
+  </div>
+  
+  
+<!-- Video Section -->
+<section class="video-section">
+  <div class="video-overlay">
+    <div class="video-content text-center">
+      <h2 class="ltext-103 cl5">Discover Our Story</h2>
+      <p>Explore the journey behind our brand and our commitment to quality fashion.</p>
+ 
+    </div>
+  </div>
+  <video autoplay loop muted playsinline class="video-bg">
+    <source src="{% static 'videos/video.mp4' %}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</section>
+
+
+
+<!-- Testimonial Section -->
+<section class="testimonial bg-light p-t-80 p-b-50">
+  <div class="container">
+    <div class="text-center p-b-40">
+      <h2 class="ltext-103 cl0">What Our Customers Say</h2>
+      <p class="stext-105 cl0">Don't just take our word for it—hear from our happy customers!</p>
+    </div>
+    <div class="slick-testimonial">
+      <div class="testimonial-item">
+        <div class="testimonial-content">
+          <p class="testimonial-text">"This is by far the best shopping experience I've had! The quality of the products is amazing, and the customer service was excellent. Highly recommend!"</p>
+          <div class="testimonial-author">
+            <img src="https://i.ibb.co/8x9xK4H/team.jpg" alt="Customer 1" class="testimonial-img">
+            <div class="author-details">
+              <span class="author-name">Jane Doe</span>
+              <span class="author-position">Fashion Enthusiast</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-item">
+        <div class="testimonial-content">
+          <p class="testimonial-text">"I found everything I needed and more! The delivery was fast, and everything arrived in perfect condition. I'll definitely be coming back."</p>
+          <div class="testimonial-author">
+            <img src="https://i.ibb.co/8x9xK4H/team.jpg" alt="Customer 2" class="testimonial-img">
+            <div class="author-details">
+              <span class="author-name">John Smith</span>
+              <span class="author-position">Satisfied Shopper</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-item">
+        <div class="testimonial-content">
+          <p class="testimonial-text">"Amazing products, great customer support, and a seamless shopping experience. This is now my go-to place for all my fashion needs!"</p>
+          <div class="testimonial-author">
+            <img src="https://i.ibb.co/8x9xK4H/team.jpg" alt="Customer 3" class="testimonial-img">
+            <div class="author-details">
+              <span class="author-name">Emily Johnson</span>
+              <span class="author-position">Loyal Customer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Include Slick.js for testimonial carousel -->
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $('.slick-testimonial').slick({
+      infinite: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      dots: true,
+      arrows: false,
+      autoplay: true,
+      autoplaySpeed: 5000
+    });
+  });
+</script>
+
+<!-- Testimonial Section Styles -->
+<style>
+  .testimonial {
+    background-color: #f9f9f9;
+  }
+
+  .testimonial-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  .testimonial-text {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .testimonial-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+
+  .author-details {
+    text-align: left;
+  }
+
+  .author-name {
+    font-weight: bold;
+    color: #333;
+  }
+
+  .author-position {
+    font-size: 0.9rem;
+    color: #777;
+  }
+</style>
+
+<br>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+<script src="{% static 'vendor/sweetalert/sweetalert.min.js' %}"></script>
+
+<script>
+    $(document).ready(function() {
+        // Initialize Isotope
+        var $grid = $('.isotope-grid').isotope({
+            itemSelector: '.isotope-item',
+            layoutMode: 'fitRows'
+        });
+
+        // Filter items on button click
+        $('.filter-tope-group a').on('click', function(e) {
+            e.preventDefault(); // Prevent default link behavior
+            // Load the page for filtering
+            window.location.href = $(this).attr('href');
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Initialize Slick
+        $('.slick1').slick({
+            dots: true,
+            infinite: true,
+            speed: 500,
+            fade: true,
+            cssEase: 'linear',
+            autoplay: true,
+            autoplaySpeed: 3000,
+            pauseOnHover: true, // Add this line
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                },
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        arrows: false
+                    }
+                }
+            ]
+        });
+
+        $(document).ready(function() {
+   
+    });
+  });
+</script>
+<!-- Footer -->
+<footer class="bg3 p-t-75 p-b-32">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-lg-3 p-b-50">
+        <h4 class="stext-301 cl0 p-b-30">
+          Categories
+        </h4>
+
+        <ul>
+          <li class="p-b-10">
+            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+              Women
+            </a>
+          </li>
+
+          <li class="p-b-10">
+            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+              Men
+            </a>
+          </li>
+
+          <li class="p-b-10">
+            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+              Shoes
+            </a>
+          </li>
+
+          <li class="p-b-10">
+            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+              Watches
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-sm-6 col-lg-3 p-b-50">
+        <h4 class="stext-301 cl0 p-b-30">
+          Help
+        </h4>
+
+        <ul>
+          <li class="p-b-10">
+            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+              Track Order
+            </a>
+          </li>
+
+          <li class="p-b-10">
+            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+              Returns 
+            </a>
+          </li>
+
+          <li class="p-b-10">
+            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+              Shipping
+            </a>
+          </li>
+
+          <li class="p-b-10">
+            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+              FAQs
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-6 col-lg-3 p-b-50">
+        <h4 class="stext-301 cl0 p-b-30">GET IN TOUCH</h4>
+        <p class="stext-107 cl7 size-201">
+          Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+        </p>
+        <div class="p-t-27">
+          <a href="https://www.facebook.com" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://www.instagram.com" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.pinterest.com" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+            <i class="fab fa-pinterest-p"></i>
+          </a>
+          <a href="https://www.twitter.com" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="https://www.youtube.com" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-lg-3 p-b-50">
+        <h4 class="stext-301 cl0 p-b-30">
+          Newsletter
+        </h4>
+
+        <form>
+          <div class="wrap-input1 w-full p-b-4">
+            <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
+            <div class="focus-input1 trans-04"></div>
+          </div>
+
+          <div class="p-t-18">
+            <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+              Subscribe
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+   
+      <p class="stext-107 cl6 txt-center">
+
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved 
+
+
+      </p>
+    </div>
+  </div>
+</footer>
+<script>document.addEventListener('DOMContentLoaded', function() {
+  const slider = document.querySelector('.logo-slider');
+  let isHovered = false;
+
+  slider.addEventListener('mouseover', () => (isHovered = true));
+  slider.addEventListener('mouseout', () => (isHovered = false));
+
+  setInterval(() => {
+      if (!isHovered) {
+          slider.appendChild(slider.firstElementChild);
+      }
+  }, 2000); // Adjust the delay as needed
+});
+</script>
+
+<!-- Additional JavaScript for plugins -->
+<script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+<script src="{% static 'vendor/sweetalert/sweetalert.min.js' %}"></script>
+<script src="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+{% endblock content %}

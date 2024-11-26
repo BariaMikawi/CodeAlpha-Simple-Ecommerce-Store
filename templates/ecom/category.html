@@ -1,0 +1,295 @@
+{% load static %}
+
+{% block content %}
+
+<!-- Include Navbar -->
+{% if request.user.is_authenticated %}
+    {% include "ecom/customer_navbar.html" %}
+{% else %}
+    {% include "ecom/navbar.html" %}
+{% endif %}
+
+
+<!-- Full-width Banner -->
+<div class="banner" style="background-color: #333; padding: 60px 0; text-align: center; color: #fff;">
+    <h1 style="font-family: 'Montserrat', sans-serif; font-weight: 700; letter-spacing: 2px;">
+        {{ category_name }} Collection
+    </h1>
+</div>
+<!-- Search Bar with Price Filter -->
+<div class="container my-3">
+    <form action="{% url 'product-search' %}" method="GET" class="d-flex" style="max-width: 600px; margin: 0 auto;">
+        <input 
+            type="text" 
+            name="q" 
+            class="form-control me-2" 
+            placeholder="Search for products..." 
+            value="{{ request.GET.q|default_if_none:'' }}" 
+            style="border-radius: 30px; padding: 10px 15px; font-size: 16px;"
+        >
+
+        <input 
+            type="number" 
+            name="min_price" 
+            class="form-control me-2" 
+            placeholder="Min Price" 
+            value="{{ request.GET.min_price|default_if_none:'' }}" 
+            style="border-radius: 30px; padding: 10px 15px; font-size: 16px;"
+        >
+
+        <input 
+            type="number" 
+            name="max_price" 
+            class="form-control me-2" 
+            placeholder="Max Price" 
+            value="{{ request.GET.max_price|default_if_none:'' }}" 
+            style="border-radius: 30px; padding: 10px 15px; font-size: 16px;"
+        >
+
+        <button 
+            type="submit" 
+            class="btn btn-primary" 
+            style="padding: 10px 20px; border-radius: 30px; background: linear-gradient(to right, #ff7e5f, #feb47b); border: none; font-size: 16px;"
+        >
+            Search
+        </button>
+    </form>
+</div>
+
+<!-- Product Grid -->
+<div class="container mt-5">
+    <div class="row gx-4 gy-4">
+        {% if products %}
+            {% for p in products %}
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="product-card" style="position: relative; border-radius: 20px; overflow: hidden; background-color: #fff; transition: transform 0.3s ease-in-out; box-shadow: 0 6px 20px rgba(0,0,0,0.15); cursor: pointer;">
+                    <!-- Product Image -->
+                    <div class="product-image" style="position: relative; overflow: hidden; border-radius: 20px;">
+                        <img src="{% static p.product_image.url %}" alt="{{ p.name }}" class="img-fluid" style="width: 100%; height: 350px; object-fit: cover;">
+
+                        <div class="product-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.4s ease;">
+                            <a href="#" class="btn btn-light quick-view-btn" data-id="{{ p.id }}" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 12px 20px; font-size: 16px; border-radius: 30px; font-family: 'Montserrat', sans-serif; opacity: 0; transition: opacity 0.4s ease; background-color: #ffffff; color: #333; border: 2px solid #ffffff;">Quick View</a>
+                            <a href="{% url 'add-to-cart' p.id %}" class="btn btn-warning add-to-cart-btn" style="position: absolute; top: 70%; left: 50%; transform: translate(-50%, -50%); padding: 12px 20px; font-size: 16px; border-radius: 30px; font-family: 'Montserrat', sans-serif; opacity: 0; transition: opacity 0.4s ease; background-color: #ff6f00; color: #fff; border: 2px solid #ff6f00;">Add to Cart</a>
+                        </div>
+                    </div>
+                    <!-- Product Details -->
+                    <div class="product-details p-3 text-center">
+                        <h5 style="font-family: 'Roboto', sans-serif; font-weight: 600; margin-bottom: 8px; color: #333; font-size: 1.1rem; letter-spacing: 0.5px;">{{ p.name }}</h5>
+                        <p style="font-family: 'Roboto', sans-serif; color: #777; margin: 0; font-size: 1rem;">${{ p.price }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <h3 style="text-align: center; color: #777; font-family: 'Roboto', sans-serif;">No Products Found</h3>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Quick View Modal -->
+<div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none; background-color: #333; color: #fff;">
+                <h5 class="modal-title" id="quickViewTitle"></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row align-items-center">
+                    <!-- Enlarged Image -->
+                    <div class="col-md-6 text-center">
+                        <img id="quickViewImage" class="img-fluid" src="" alt="Product Image" style="border-radius: 10px; max-height: 400px; object-fit: cover;">
+                    </div>
+                    <!-- Product Details -->
+                    <div class="col-md-6">
+                        <h3 id="quickViewName" style="font-family: 'Roboto', sans-serif; font-weight: bold; margin-bottom: 10px;"></h3>
+                        <p id="quickViewPrice" style="font-size: 1.2rem; color: #333; margin-bottom: 15px;"></p>
+                        <p id="quickViewDescription" style="font-family: 'Roboto', sans-serif; line-height: 1.6; color: #555;"></p>
+                        <button class="btn btn-primary mt-3" style="padding: 10px 20px; background: linear-gradient(to right, #ff7e5f, #feb47b); border: none; color: #fff; font-family: 'Roboto', sans-serif; border-radius: 5px;">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Quick View and Hover Effects -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Hover Effect for Product Cards
+    const productCards = document.querySelectorAll(".product-card");
+    productCards.forEach(card => {
+        const overlay = card.querySelector(".product-overlay");
+        const quickViewButton = overlay.querySelector(".quick-view-btn");
+        const addToCartButton = overlay.querySelector(".add-to-cart-btn");
+
+        card.addEventListener("mouseenter", function() {
+            overlay.style.opacity = 1;  // Show overlay
+            quickViewButton.style.opacity = 1;  // Show Quick View button
+            addToCartButton.style.opacity = 1;  // Show Add to Cart button
+        });
+
+        card.addEventListener("mouseleave", function() {
+            overlay.style.opacity = 0;  // Hide overlay
+            quickViewButton.style.opacity = 0;  // Hide Quick View button
+            addToCartButton.style.opacity = 0;  // Hide Add to Cart button
+        });
+    });
+
+    // Quick View Button Click
+    document.querySelectorAll(".quick-view-btn").forEach(button => {
+        button.addEventListener("click", function (event) {
+            event.preventDefault();
+            const productId = button.getAttribute("data-id");
+
+            // Fetch product details
+            fetch(`/product-detail/${productId}/`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        alert("Product not found.");
+                        return;
+                    }
+
+                    // Populate modal
+                    document.getElementById("quickViewTitle").textContent = data.name;
+                    document.getElementById("quickViewImage").src = data.product_image_url;
+                    document.getElementById("quickViewName").textContent = data.name;
+                    document.getElementById("quickViewPrice").textContent = `$${data.price}`;
+                    document.getElementById("quickViewDescription").textContent = data.description;
+
+                    // Show modal
+                    new bootstrap.Modal(document.getElementById("quickViewModal")).show();
+                })
+                .catch(error => console.error("Error fetching product details:", error));
+        });
+    });
+});
+</script>
+<!-- Footer -->
+<footer class="bg3 p-t-75 p-b-32">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-lg-3 p-b-50">
+          <h4 class="stext-301 cl0 p-b-30">
+            Categories
+          </h4>
+  
+          <ul>
+            <li class="p-b-10">
+              <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                Women
+              </a>
+            </li>
+  
+            <li class="p-b-10">
+              <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                Men
+              </a>
+            </li>
+  
+            <li class="p-b-10">
+              <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                Shoes
+              </a>
+            </li>
+  
+            <li class="p-b-10">
+              <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                Watches
+              </a>
+            </li>
+          </ul>
+        </div>
+  
+        <div class="col-sm-6 col-lg-3 p-b-50">
+          <h4 class="stext-301 cl0 p-b-30">
+            Help
+          </h4>
+  
+          <ul>
+            <li class="p-b-10">
+              <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                Track Order
+              </a>
+            </li>
+  
+            <li class="p-b-10">
+              <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                Returns 
+              </a>
+            </li>
+  
+            <li class="p-b-10">
+              <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                Shipping
+              </a>
+            </li>
+  
+            <li class="p-b-10">
+              <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                FAQs
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-6 col-lg-3 p-b-50">
+          <h4 class="stext-301 cl0 p-b-30">GET IN TOUCH</h4>
+          <p class="stext-107 cl7 size-201">
+            Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+          </p>
+          <div class="p-t-27">
+            <a href="https://www.facebook.com" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.pinterest.com" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+              <i class="fab fa-pinterest-p"></i>
+            </a>
+            <a href="https://www.twitter.com" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.youtube.com" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div class="col-sm-6 col-lg-3 p-b-50">
+          <h4 class="stext-301 cl0 p-b-30">
+            Newsletter
+          </h4>
+  
+          <form>
+            <div class="wrap-input1 w-full p-b-4">
+              <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
+              <div class="focus-input1 trans-04"></div>
+            </div>
+  
+            <div class="p-t-18">
+              <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+                Subscribe
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+  
+     
+        <p class="stext-107 cl6 txt-center">
+        
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved 
+
+  
+        </p>
+      </div>
+    </div>
+  </footer>
+{% endblock %}

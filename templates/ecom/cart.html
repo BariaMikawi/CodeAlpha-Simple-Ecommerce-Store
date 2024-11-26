@@ -1,0 +1,171 @@
+{% load static %}
+{% block content %}
+
+<head>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <style media="screen">
+    .button {
+      display: inline-block;
+      border-radius: 4px;
+      background-color: #f4511e;
+      border: none;
+      color: #FFFFFF;
+      text-align: center;
+      font-size: 28px;
+      padding: 20px;
+      width: 200px;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    .button span {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: 0.5s;
+    }
+
+    .button span:after {
+      content: '\00bb';
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -20px;
+      transition: 0.5s;
+    }
+
+    .button:hover span {
+      padding-right: 25px;
+    }
+
+    .button:hover span:after {
+      opacity: 1;
+      right: 0;
+    }
+
+    .button2 {
+      background-color: white;
+      color: black;
+      border: 2px solid #008CBA;
+    }
+
+    .button2:hover {
+      background-color: #008CBA;
+      color: white;
+    }
+
+    .cart-table {
+      border: 1px solid #ddd;
+      margin-top: 20px;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-table th {
+      background-color: #f8f9fa;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .cart-table td {
+      text-align: center;
+      padding: 10px;
+      vertical-align: middle;
+    }
+
+    .cart-table img {
+      max-width: 50px;
+      height: auto;
+    }
+
+    .cart-table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .cart-footer {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .cart-footer button {
+      margin: 10px;
+      padding: 15px 30px;
+      font-size: 18px;
+      width: 200px;
+    }
+
+    .cart-footer .btn-danger {
+      background-color: #f4511e;
+      color: white;
+    }
+
+    .cart-footer .btn-success {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .empty-cart-message {
+      font-size: 24px;
+      color: #f4511e;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<br><br><br><br>
+
+<div class="container">
+  <div class="panel panel-success">
+    <div class="panel-heading">
+      <h6 style="text-align:center;" class="panel-title">My Cart</h6>
+    </div>
+    <table class="table table-hover table-bordered cart-table" id="dev-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Image</th>
+          <th>Price</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      {% for p in products %}
+        {% if p %}
+          <tr>
+            <td>{{ p.name }}</td>
+            <td><img src="{% static p.product_image.url %}" alt="Product Image" class="img-fluid" /></td>
+            <td>$ {{ p.price }}</td>
+            <td>{{ p.description }}</td>
+            <td>
+              <a class="btn btn-danger btn-xs" href="{% url 'remove-from-cart' p.id %}">
+                <span class="glyphicon glyphicon-trash"></span> Remove
+              </a>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="5" class="empty-cart-message">Your cart is currently empty!</td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+    </table>
+  </div>
+</div>
+
+<div class="cart-footer">
+  <button class="btn btn-danger btn-lg">Total: ${{ total }}</button>
+  <a href="/customer-address">
+    <button class="btn btn-success btn-lg">
+      <span>Proceed to Checkout</span>
+    </button>
+  </a>
+</div>
+
+<br><br><br><br><br>
+
+{% endblock %}
